@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body{
+			margin: 0;
+			overflow:hidden;
+		}
+	</style>
+
+</head>
+<body>
+	<canvas class="myCanvas">
+		<p>卧槽你的浏览器竟然不支持 canvas！</p>
+	</canvas>	
+	<script>
+		var canvas = document.querySelector('.myCanvas');
+		var width = canvas.width = window.innerWidth;
+		var height = canvas.height = window.innerHeight;
+
+		var ctx=canvas.getContext('2d');
+		ctx.fillStyle='rgb(0,0,0)';
+		ctx.fillRect(0,0,width,height);
+	</script>
+</body>
+</html>

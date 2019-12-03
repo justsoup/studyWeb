@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+	#smile{
+		width: 500px;
+		height: 500px;
+		background-image:url("ic.jpg");
+		background-repeat: no-repeat;
+	}
+</style>
+
+<body>
+	<div id="smile" style="background-position:0px 0px"></div>
+	<button id="smile-btn">开始微笑</button>
+	<button id="close-btn">闭嘴</button>
+	
+</body>
+<script>
+	const btn=document.getElementById('smile-btn');
+	const smile=document.getElementById('smile');
+	const close=document.getElementById('close-btn');
+	//let value=getComputedStyle(smile)['background-position'];
+	//console.log(value);
+	let num=0;
+	btn.onclick=function(){
+		window.smileAction=setInterval(function(){
+			let value=smile.style.backgroundPositionY;
+			//console.log(value);
+			num+=480
+			if(num<8160){
+				console.log(num);
+				let numY=-num+'px';
+				smile.style.backgroundPositionY=numY;
+			}else{
+				smile.style.backgroundPositionY='0px';
+				num=0;
+			}
+
+		},100)
+	}
+	close.onclick=function(){
+		clearInterval(smileAction);
+	}
+</script>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		if(!Array.prototype.indexOf){
+			Array.prototype.indexOf=function(val){
+				var value=this;
+				for(var i=0;i<value.length;i++){
+					if(value[i]==val){
+						return i;
+					}
+				}
+				return -1;
+			}
+		}
+
+
+		Array.prototype.removeRepeat=function(){
+			var result=[];
+			var len=this.length;
+			for(var i=0;i<len;i++){
+				if(result.indexOf(this[i])<0){
+					result.push(this[i]);
+				}
+			}
+			return result;
+
+		}
+
+		let arr=[1,2,3,2,1,3,2,1,0];
+		let final=arr.removeRepeat();
+		console.log(final);
+
+		
+	</script>
+</body>
+</html>

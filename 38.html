@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div{
+			width: 150px;
+		}
+
+		ul{
+			margin: 0;
+			padding: 0;
+			border: 1px solid black;
+			width: 160px;
+		}
+
+		ul li{
+			list-style-type: none;
+		}
+
+		li:hover{
+			background-color: blue;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+	    <input id="email-input" type="text">
+	    <ul id="email-sug-wrapper" class="email-sug"></ul>
+</div>
+</body>
+<script>
+	let postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+	const inputEmail=document.getElementById('email-input');
+	const inputUl=document.getElementById('email-sug-wrapper');
+	inputEmail.focus();
+	inputEmail.onkeyup=function(){
+		var inputContent=inputEmail.value.trim();
+		//console.log(inputContent);
+		var signPosition=inputContent.indexOf('@');
+		var nowfixList=postfixList;
+		if(signPosition!=-1){
+			var sliceContent=inputContent.slice(0,signPosition);
+			var firstWord=inputContent.slice(signPosition+1,signPosition+2);
+			switch(firstWord){
+				case '1':
+					nowfixList=['163.com','126.com'];
+					break;
+				case '2':
+					nowfixList=['263.net'];
+					break;
+				case 'q':
+					nowfixList=['qq.com'];
+					break;
+				case 'g':
+					nowfixList=['gamil.com'];
+					break;
+			}
+		}else{
+			var sliceContent=inputContent;
+		}
+
+		
+		for(let i=0;i<postfixList.length;i++){
+			liList[i].textContent='';
+		}
+
+		for(let z=0;z<nowfixList.length;z++){
+			liList[z].textContent=sliceContent+'@'+nowfixList[z];
+		}
+
+
+		if(inputContent!=''){
+			inputUl.style.display='block';
+		}else{
+			inputUl.style.display='none';
+		}
+
+	}
+
+	for(let j=0;j<postfixList.length;j++){
+		var newLi=document.createElement('li');
+		inputUl.appendChild(newLi);
+	}
+	inputUl.style.display='none';
+	var liList=document.getElementsByTagName('li');
+
+	for(let x=0;x<liList.length;x++){
+		liList[x].onclick=function(){
+			console.log(liList[x].textContent);
+			inputEmail.value=liList[x].textContent;
+			inputUl.style.display='none';
+			inputEmail.focus();
+		}
+	}
+
+
+</script>
+</html>

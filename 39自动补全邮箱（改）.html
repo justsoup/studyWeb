@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		li{
+			list-style-type: none;
+		}
+
+		li:hover{
+			background-color: orange;
+		}
+
+		ul{
+			margin: 0;
+			padding: 0;
+			width: 160px;
+			overflow: auto;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		    <input id="email-input" type="text">
+		    <ul id="email-sug-wrapper" class="email-sug"></ul>
+	</div>
+</body>
+<script>
+	let postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+	const inputEmail=document.getElementById('email-input');
+	const ulbox=document.getElementById('email-sug-wrapper');
+	let index=-1;
+
+
+
+	function getInputboxValue(){
+		return inputEmail.value.trim();
+	}
+
+
+	function isDisplayUlbox(flag){
+		if(flag){
+			ulbox.style.display='block';
+		}else{
+			ulbox.style.display='none';
+		}
+	}
+
+	function judgeInputboxContent(tempInputEmail){
+		var tempPostfixList=postfixList;
+		var tempEmailList=new Array();
+		var signPositon=tempInputEmail.indexOf('@');
+		if(signPositon!=-1){
+			var signLater=tempInputEmail.slice(signPositon+1);
+			//console.log(signLater)
+			for(var i in tempPostfixList){
+				if(tempPostfixList[i].indexOf(signLater)===0){
+					tempEmailList.push(tempPostfixList[i]);
+				}
+			}
+			return tempEmailList;
+		}else{
+			return tempPostfixList;
+		}
+
+	}
+
+	function isEmptyInputbox(){
+		if(inputEmail.value===''){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+
+	function delInputboxSign(tempInputEmail){
+		var signPositon=tempInputEmail.indexOf('@');
+		if(signPositon!=-1){
+			return tempInputEmail.slice(0,signPositon);
+		}else{
+			return tempInputEmail;
+		}
+	}
+
+	function createManyLibox(emailList,finalEmail){
+		var len=ulbox.childNodes.length;
+		for(var i=len-1;i>=0;i--){
+			ulbox.removeChild(ulbox.childNodes[i]);
+			}
+		for(var i=0;i<emailList.length;i++){
+			var libox=document.createElement('li');
+			libox.textContent=finalEmail+'@'+emailList[i];
+			ulbox.appendChild(libox);
+		}
+	}
+
+
+	inputEmail.addEventListener('keyup',function(event){
+
+		var e= event || window.event;　
+
+		if(isEmptyInputbox()){
+			isDisplayUlbox(false);
+		}else{
+			isDisplayUlbox(true);
+		}
+
+
+		var tempInputEmail=getInputboxValue();
+		var emailList=judgeInputboxContent(tempInputEmail);
+		var finalEmail=delInputboxSign(tempInputEmail);
+
+
+		createManyLibox(emailList,finalEmail);
+		
+		
+		if(e.keyCode==38){
+			if(index<0){
+				index=-1;
+			}else{
+				index--;
+			}
+			//console.log(index);
+		}
+
+		if(e.keyCode==40){
+			if(index>=ulbox.childNodes.length-1){
+				index=ulbox.childNodes.length-1;
+			}else{
+				index++;
+			}
+			//console.log(index);
+		}
+
+		if(ulbox.childNodes[index]!=undefined){
+			ulbox.childNodes[index].style.backgroundColor='orange';
+		}
+
+		if(e.keyCode==13 || e.keyCode==108){
+			inputEmail.value=ulbox.childNodes[index].textContent;
+			isDisplayUlbox(false);
+			inputEmail.focus();
+		}
+
+		if(e.keyCode==27){
+			inputEmail.select();
+		}
+
+	})
+
+    ulbox.onclick=function(event){
+    	var ev=event||window.event;
+    	var target=ev.target||ev.srcElement;
+    	if(target.nodeName.toUpperCase()=='LI'){
+    		inputEmail.value=target.textContent;
+    		isDisplayUlbox(false);
+    		inputEmail.focus();
+    	}
+    }
+
+    inputEmail.focus();
+
+
+
+
+	
+
+
+
+
+
+</script>
+</html>

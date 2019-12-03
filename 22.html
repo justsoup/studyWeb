@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="text" id="dec-number" placeholder="输入一个十进制非负整数">
+	<input type="text" id="bin-bit" placeholder="输入转化后二进制数字位数" value="5">
+	<button id="trans-btn">转化为二进制</button>
+	<p id="result">运算结果</p>
+	<script>
+
+		function dec2bin(decNumber){
+			if(parseInt(decNumber)==decNumber&&parseInt(decNumber)>=0){
+				return true;
+				
+			}else{
+				return false;
+			}
+		}
+		const binaryBtn=document.getElementById('trans-btn');
+		const number=document.getElementById('dec-number');
+		const bit=document.getElementById('bin-bit');
+		const result=document.getElementById('result');
+
+		binaryBtn.onclick=function(){
+			//console.log('222');
+			bitCount=parseInt(bit.value);
+			//console.log(bitCount);
+			if(dec2bin(number.value)){
+				let binaryNum=parseInt(number.value).toString(2);
+				//console.log(binaryNum.length);
+				binaryLen=binaryNum.length;
+				if(binaryLen<=bitCount){
+					result.textContent=binaryNum;
+				}else{
+					result.textContent=binaryNum;
+					console.log('digit error!');
+				}
+				
+			}
+
+		}
+	
+
+	</script>
+	
+</body>
+</html>

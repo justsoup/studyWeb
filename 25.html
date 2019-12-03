@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="text" id="name">
+	<button id="submit-btn">Submit</button>
+</body>
+<script>
+	const submitBtn=document.getElementById('submit-btn');
+	const name=document.getElementById('name');
+	name.focus();
+
+	submitBtn.onclick=function(){
+		console.log(name.value);
+	};
+
+	name.addEventListener('keyup',function(event){
+		event.preventDefault();
+		if(event.keyCode===13){
+			submitBtn.click();
+		}else if(event.keyCode===27){
+			name.value='';
+		}
+	});
+	
+
+</script>
+</html>

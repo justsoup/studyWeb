@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+	<input type="radio" name="status" id="school">
+	<label for="school">School</label>
+
+	<input type="radio" name="status" id="company">
+	<label for="company">Company</label>
+
+	<select id="school-select">
+		<option>北京邮电大学</option>
+		<option>黑龙江大学</option>
+		<option>华中科技大学</option>
+	</select>
+
+	<select id="company-select" hidden>
+		<option>百度</option>
+		<option>爱奇艺</option>
+	</select>
+</body>
+
+
+<script>
+	
+	const school=document.getElementById('school');
+	const company=document.getElementById('company');
+	const schoolSelect=document.getElementById('school-select');
+	schoolSelect.style.display='none';
+	const companySelect=document.getElementById('company-select');
+	companySelect.style.display='none';
+	school.onclick=function(){
+		schoolSelect.style.display='inline';
+		companySelect.style.display='none';
+	}
+	company.onclick=function(){
+		companySelect.style.display='inline';
+		schoolSelect.style.display='none';
+	}
+</script>
+</html>

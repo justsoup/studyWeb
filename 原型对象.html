@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+
+/*	function Person(name,age,job){	//构造函数模式
+		this.name=name;
+		this.age=age;
+		this.job=job;
+		this.friends=["Shelby","Court"];
+	}	*/
+	function Person(){
+
+	}
+
+	//在构造函数中定义实例属性
+	//在原型中定义实例共享的属性cunstructor和方法
+
+	let person1=new Person();
+
+	Person.prototype={		//重写原型
+		name:"Nicholas",
+		age:29,
+		job:"Software Engineer",
+		sayName:function(){
+			alert(this.name);
+		}
+	};
+
+	Object.defineProperty(Person.prototype,"constructor",{
+		enumerable:false,
+		value:Person
+	})
+
+	let person2=new Person();
+
+	console.log(person1.name);	//person1指向旧的原型对象，值为undefined
+	console.log(person2.name);	
+
+	console.log(person2.hasOwnProperty("name"));
+	person2.name="Mike";
+	console.log(person2.hasOwnProperty("name"));	//true
+
+
+
+	function hasPrototypeProperty(Object,name){		//判断属性位于原型还是对象
+		return !Object.hasOwnProperty(name) && (name in Object);
+	}
+
+	console.log(hasPrototypeProperty(person2,"name"));	//false,存在于对象中
+	let person3=new Person();
+	console.log(hasPrototypeProperty(person3,"name"));	//true,存在原型中
+	delete person2.name;	//删除对象实例的属性，指向原型
+	console.log(person2.name===person3.name);
+
+
+	let keys=Object.getOwnPropertyNames(Person.prototype);		//遍历原型中的所有属性和方法，无论是否可枚举
+	console.log(keys);
+
+	let passKeys=Object.keys(Person.prototype);	//只遍历可枚举的属性和方法
+	console.log(passKeys);
+	let passKeys1=Object.keys(person2);		//遍历对象实例
+	console.log(passKeys1);
+
+
+</script>
+</html>

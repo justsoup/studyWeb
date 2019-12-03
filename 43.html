@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<script>
+		//基础弹窗程序
+		var wroxWin = window.open("https://www.sobaidupan.com/","wroxWindow","height=400,width=400,top=10,left=10,resizable=yes"); 
+		wroxWin.resizeTo(500,500); //resizeTo调整到500*500，resizeBy调整到(+500)*(+500)
+
+		wroxWin.moveTo(100,100); 
+		wroxWin.close(); 
+		console.log(wroxWin.closed);
+		console.log(wroxWin.opener);   //保存着打开wronWin的对象
+
+		//winxWin.opener=null;  //设置为独立标签页
+
+
+		//弹窗检测程序
+		var blocked=false;
+		try{
+			var wroxWin1=window.open("http://www.baidu.com","_blank");
+			if(wroxWin1==null){
+				blocked=true;
+			}
+		}catch(ex){
+			blocked=true;
+		}
+		if(blocked){
+			alert("The popup was blocked!");
+		}else{
+			alert("The popup not blocked!");
+		}
+
+
+
+
+
+
+	</script>
+</body>
+</html>

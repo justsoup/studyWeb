@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<input type="text" id="clock" size="35" />
+	<input type="button" value="Display timed alertbox!">
+</body>
+
+<script>
+	//计时器
+	let int=self.setInterval("clock()",1000);
+	function clock(){
+	  let t=new Date();
+	  document.getElementById("clock").value=t;
+	  }
+
+
+
+	//定时器
+	let btn=document.getElementsByTagName('input')[1];
+	console.log(btn);
+	btn.onclick=function(){
+		let t=setTimeout("alert('5 seconds!')",5000);
+	}
+
+
+</script>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<button id="create-table">生成九九乘法表</button>
+	<table></table>
+</body>
+<script>
+	const createTable=document.getElementById('create-table');
+	const table=document.getElementsByTagName('table')[0];
+	createTable.onclick=function(){
+		for(let i=1;i<=9;i++){
+			for(let j=i;j<=9;j++){
+				let labelTd=document.createElement('td');
+				let txt=document.createTextNode(i+'x'+j+'='+i*j);
+				labelTd.appendChild(txt);
+				table.appendChild(labelTd);
+
+			}
+
+		}
+	}
+
+	let nowTime=new Date().getHours()
+	console.log(nowTime);
+	console.log(typeof(nowTime));
+	if(nowTime>5 && nowTime<12){
+		alert('早上好');
+	}else if(nowTime>=12 && nowTime<18){
+		alert('下午好');
+	}else if(nowTime>=18 && nowTime<=24){
+		alert('晚上好');
+	}else{
+		alert('午夜好');
+	}
+
+	
+</script>
+</html>

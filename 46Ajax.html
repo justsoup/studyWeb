@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var xhr=new XMLHttpRequest();
+		console.log(xhr);
+		xhr.open('GET','/api/user?id=333',true);
+		xhr.send('');
+
+		xhr.onreadystatechange=function(e){
+			if(xhr.readyState==4 && xhr.status==200){
+				console.log(xhr.responseText);
+			}
+		};
+
+	</script>
+</body>
+</html>

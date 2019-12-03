@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <meta charset="UTF-8">
+    <title>IFE ECMAScript</title>
+    <style>
+        .email-sug {
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+            width: 150px;
+            height: 22px;
+            line-height: 22px;
+            font-size: 14px;
+        }
+ 
+        li:hover {
+            background-color: antiquewhite;
+        }
+ 
+        .selected {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+ 
+<body>
+    <div class="wrapper">
+        <input id="email-input" type="text">
+        <ul id="email-sug-wrapper" class="email-sug"></ul>
+    </div>
+
+
+<script>
+
+        var nowSelectTipIndex = 0;
+        var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+        var input = document.getElementById("email-input");
+        var ul = document.getElementById("email-sug-wrapper");
+        
+        input.addEventListener('keyup',function(event){
+        	var e=event||window.event;
+        	if(e.keyCode!=13 && e.keyCode!=108 && e.keyCode!=38 && e.keyCode!=40){
+        		resetIndex();
+        	}
+        	if(e.keyCode==38){
+        		if(nowSelectTipIndex==0){
+        			nowSelectTipIndex=ul.childNodes.length-1;
+        		}else{
+        			nowSelectTipIndex--;
+        		}
+        	}
+        	if(e.keyCode==40){
+        		if(nowSelectTipIndex>=ul.childNodes.length-1){
+        			nowSelectTipIndex=0;
+        		}else{
+        			nowSelectTipIndex++;
+        		}
+        	}
+        	addPrompt();
+        	displayOrHide();
+        	if(e.keyCode==13||event.keyCode==108){
+        		input.value=ul.childNodes[nowSelectTipIndex].innerText;
+        		hide();
+        	}
+        });
+
+        ul.onclick=function(event){
+        	var ev=event||window.event;
+        	var target=ev.target||ev.srcElement;
+        	if(target.nodeName.toUpperCase()=='LI'){
+        		input.value=target.innerText;
+        		hide();
+        	}
+        }
+
+        function resetIndex(){
+        	nowSelectTipIndex=0;
+        }
+
+        function getInput(){
+        	var input1=input.value;
+        	return input1.trim();
+        }
+
+        function setPrompt(){
+        	var input1=getInput();
+        	var input2,input3;
+        	var flag=0;
+        	if(input1.indexOf('@')==-1){
+        		input2=input1;
+        	}else{
+        		input2=input1.slice(0,input1.indexOf('@')+1);
+        		input3=input1.slice(input1.indexOf('@')+1);
+        	}
+        	var res=new Array();
+        	for(var i=0;i<postfixList.length;i++){
+        		if(postfixList[i].indexOf(input3)==0){
+        			res[i]=input2+'@'+postfixList[i];
+        			flag=1;
+        			console.log(res);
+        			
+        		}
+        	}
+        	if(flag==0){
+        		for(var i=0;i<postfixList.length;i++){
+        			res[i]=input2+'@'+postfixList[i];
+        		}
+        	}
+        	for(var i=0;i<res.length;i++){
+        		if(typeof res[i]=='undefined'||res[i]==''){
+        			res.splice(i,1);
+        			i--;
+        		}
+        	}
+        	return res;
+        }
+
+        function addPrompt(){
+        	var prompt=setPrompt();
+        	var len=ul.childNodes.length;
+        	for(var i=len-1;i>=0;i--){
+        		ul.removeChild(ul.childNodes[i]);
+        	}
+        	for(var i=0;i<prompt.length;i++){
+        		var li=document.createElement('li');
+        		li.innerHTML=prompt[i];
+        		ul.appendChild(li);
+        	}
+        }
+        function displayOrHide(){
+        	var input1=getInput();
+        	if(input1==''){
+        		ul.style.display='none';
+        	}else{
+        		ul.style.display='block';
+        	}
+        }
+ 
+
+</script>
+</body>
+</html>
+

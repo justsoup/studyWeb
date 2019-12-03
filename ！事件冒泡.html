@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="parent" style="background-color: #000;height: 400px;width: 400px" data-id="444">
+        <div id="child" style="background-color: #fff;height: 200px;width: 200px" data-id="555"></div>
+	</div>
+
+	<ul id="parentUI">
+			<li>我还是个孩子</li>
+			<li>我还是个孩子</li>
+			<li>我还是个孩子</li>
+			<li>我还是个孩子</li>
+			<li>我还是个孩子</li>
+		</ul>	
+
+
+
+　　<ul id="test">
+        <li>
+            <p>11111111111</p>
+        </li>
+        <li>
+            <div>
+                22222222
+            </div>
+        </li>
+        <li>
+            <span>3333333333</span>
+        </li>
+        <li>4444444</li>
+    </ul>
+
+</body>
+<script>
+	//阻止事件冒泡
+	document.getElementById('parent').onclick=function(){
+		console.log(this.getAttribute('data-id'));
+	};
+
+	document.getElementById('child').onclick=function(ev){
+		let e=ev||window.event;
+		console.log(this.getAttribute('data-id'));
+		stopPropagation(e);
+	};
+
+	function stopPropagation(e){
+		if(e.stopPropagation){
+			e.stopPropagation();
+		}else{
+			e.cancelBubble=true;
+		}
+	}
+
+
+
+	//事件委托，减少DOM操作
+	let ul=document.getElementById('parentUI');
+	ul.onclick=function(event){
+		let e=event||window.event;
+		let source=e.target||e.srcElement;
+		if(source.nodeName.toLowerCase()=='li'){
+			alert(source.innerHTML);
+		}
+		e.stopPropagation();
+	}
+	
+
+	const ulTest=document.getElementById('test');
+	ulTest.addEventListener('click',function(ev){
+		let target=ev.target;
+		while(target!=ulTest){
+			if(target.tagName.toLowerCase()=='li'){
+				console.log('li click~');
+				break;
+			}
+			target=target.parentNode;
+		}
+	})
+
+</script>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<select id="year-select">
+
+	</select>
+
+	<select id="month-select">
+
+	</select>
+
+	<select id="day-select">
+
+	</select>
+
+	<select id="hour-select">
+
+	</select>
+
+	<select id="minite-select">
+
+	</select>
+
+	<select id="second-select">
+
+	</select>
+
+	<p id="result-wrapper">现在距离 2001年1月1日星期X HH:MM:SS 还有 X 天 X 小时 X 分 X 秒</p>
+</body>
+<script>
+	const resultWrapper=document.getElementById('result-wrapper');
+	const selectList=document.getElementsByTagName('select');
+
+	function insertNode(start,end,parentNode){			//批量生成option节点
+		for(let i=start;i<=end;i++){
+			var node=document.createElement('option');
+			node.textContent=i;
+			parentNode.appendChild(node);
+		}
+	}
+
+	function setMonthDays(){			//判断月份对应的日期列表
+		var year=selectList[0].value,
+		month=selectList[1].value;
+		//console.log(month)
+		var days=0;
+		switch(month){
+			case '1':
+			case '3':
+			case '5':
+			case '7':
+			case '8':
+			case '10':
+			case '12':
+				days=31;
+				break;
+			case '2':
+				if(isLeapYear(year)){
+					days=29;
+				}else{
+					days=28;
+				}
+				break;
+			case '4':
+			case '6':
+			case '9':
+			case '11':
+				days=30;
+				break;
+		}
+		return days;
+
+	}
+
+	function isLeapYear(year){			//判断闰年
+		return (year%100!=0 && year%4==0)|| (year%400==0);
+	}
+
+
+	for(let j=0;j<selectList.length;j++){				//为批量生成option节点设置参数
+		switch(j){
+			case 0:
+				insertNode(1997,2032,selectList[j]);
+				break;
+			case 1:
+				insertNode(1,12,selectList[j]);
+				break;
+			case 2:
+				insertNode(1,31,selectList[j]);
+				break;
+			case 3:
+				insertNode(0,23,selectList[j]);
+				break;
+			case 4:
+				insertNode(0,59,selectList[j]);
+				break;
+			case 5:
+				insertNode(0,59,selectList[j]);
+				break;
+		}
+
+	}
+
+	window.onchange=function(e){			//代理绑定yearNode和monthNode,以此修改日期列表
+		if(e.target==selectList[0]||e.target==selectList[1]){
+			selectList[2].textContent='';
+			insertNode(1,setMonthDays(),selectList[2]);
+		}
+	}
+
+	function pastOrFutureTime(){			//计算时间间隔
+		var weeks=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+		var diffday,diffhour,diffminite,diffsecond,str;
+
+		
+		var startNow=Date.now(),flag,intervalNow;
+		var selectNow=new Date(selectList[0].value,selectList[1].value-1,selectList[2].value,selectList[3].value,selectList[4].value,selectList[5].value);
+		if(selectNow<startNow){
+			intervalNow=(startNow-selectNow)/1000;
+			flag=1;
+		}else if(selectNow>startNow){
+			intervalNow=(selectNow-startNow)/1000;
+			flag=2;
+		}
+		//console.log(intervalNow);
+		//console.log(selectNow);
+		//console.log(startNow);
+		diffday=Math.floor(intervalNow/86400);
+		intervalNow=intervalNow%86400;
+		diffhour=Math.floor(intervalNow/3600);
+		intervalNow=intervalNow%3600;
+		diffminite=Math.floor(intervalNow/60);
+		intervalNow=intervalNow%60;
+		diffsecond=Math.floor(intervalNow);
+
+
+		if(flag==1){
+			 str="现在距离 " + selectList[0].value +"年" + selectList[1].value + "月" + selectList[2].value+ "日" +weeks[selectNow.getDay()]+ " 已经过去" + diffday + "天" + diffhour +"小时" + diffminite + "分" +diffsecond + "秒";
+		}
+		if(flag==2){
+			 str="现在距离 " + selectList[0].value +"年" + selectList[1].value + "月" + selectList[2].value+ "日" +weeks[selectNow.getDay()]+ " 还有" + diffday + "天" + diffhour +"小时" + diffminite + "分" +diffsecond + "秒";
+		}
+		resultWrapper.textContent=str;
+
+	}  
+
+	setInterval(pastOrFutureTime,1000);			//定时器
+
+
+
+
+
+</script>
+</html>

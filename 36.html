@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<p id="show-time"></p>
+</body>
+<script>
+	const pOutput=document.getElementById('show-time');
+	let nowTime=setInterval(showTime,1000);
+	function showTime(){
+		let today=new Date();
+		let week=showWeek(today);
+		let year=today.getFullYear();
+
+		let month=addZero(today.getMonth());
+		let day=addZero(today.getDate());
+		let hour=addZero(today.getHours());
+		let minute=addZero(today.getMinutes());
+		let second=addZero(today.getSeconds());
+		let timeZone;
+		if(parseInt(hour)<12){
+			timeZone='AM';
+		}else{
+			timeZone='PM';
+		}
+		
+		pOutput.innerHTML=year+'-'+month+'-'+day+' '+week+' '+hour+':'+minute+':'+second+' '+timeZone;
+
+	}
+
+	function showWeek(today){
+		let weekArray = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+		let week=weekArray[today.getDay()];
+		return week;
+	}
+
+	function addZero(num){
+		if(num<10){
+			return '0'+num;
+		}else{
+			return num;
+		}
+	}
+</script>
+</html>
